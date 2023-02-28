@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
+
 public class Main extends CRUD {
     public static void main(String[] args) throws IOException {
         RandomAccessFile raf = new RandomAccessFile("jogos.bin", "rw"); // Cria o arquivo
@@ -128,7 +129,7 @@ public class Main extends CRUD {
                     System.out.println("-> 1 - ID do jogo");
                     System.out.println("-> 2 - Nome");
                     System.out.println("-> 3 - Data");
-                    System.out.println("-> 4 - Idiomas");
+                    System.out.println("-> 4 - Genêros");
                     System.out.println("-> 5 - Valor");
                     System.out.println("-> 6 - Cancelar");
                     entrada = sc.next();
@@ -188,12 +189,44 @@ public class Main extends CRUD {
                     CRUD.delete(raf, CRUD.readById(raf, Integer.parseInt(entrada)));
                 break;
                 case 5: //ordenação
+                    int casoAux = 0;
                     System.out.println("____________ORDERNAR JOGO____________");
-                    if (ordenacao.intercalacao(raf) == true) {
-                        System.out.println("Ordenação realizada com sucesso!");
-                    } else {
-                        System.out.println("Erro na ordenação!");
+                    System.out.println("Qual tipo de ordenação deseja fazer?");
+                    System.out.println("-> 1 - Intercalação balanceada comum");
+                    System.out.println("-> 2 - Intercalação balanceada com blocos de tamanho variável");
+                    System.out.println("-> 3 - Intercalação balanceada com seleção por substituição");
+                    entrada = sc.next();
+                    casoAux = Integer.parseInt(entrada);
+                   
+                    switch (casoAux) {
+                        case 1:
+                        if (ordenacao.intercalacao(raf) == true) {
+                            System.out.println("Ordenação realizada com sucesso!");
+                        } else {
+                            System.out.println("Erro na ordenação!");
+                        }
+                            break;
+                    
+                        case 2: //não está funcionando
+                        if (ordenacao.ordenacaoIntercalacaoBalanceada(raf) == true) {
+                            System.out.println("Ordenação realizada com sucesso!");
+                        } else {
+                            System.out.println("Erro na ordenação!");
+                        }
+                            break;
+                            /* 
+                             * case 3:
+                            if (ordenacao.intercacaoSubstituicao(raf) == true) {
+                            System.out.println("Ordenação realizada com sucesso!");
+                            } else {
+                            System.out.println("Erro na ordenação!");
+                            }
+                            break;
+                            */
+                        
                     }
+                break;
+                
 
             }
         }

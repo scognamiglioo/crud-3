@@ -2,9 +2,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
-
 public class Main extends CRUD {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {      
+        
         RandomAccessFile raf = new RandomAccessFile("jogos.bin", "rw"); // Cria o arquivo
         Scanner sc = new Scanner(System.in); 
          Jogo jogo = new Jogo();
@@ -40,6 +40,10 @@ public class Main extends CRUD {
             } while (opcao < 0 || opcao > 6); // Enquanto a opcao for invalida continua no loop
 
             switch (opcao) {
+                case 0:
+                loop = false;
+                break;
+                
                 case 1: //criar
                     jogo = new Jogo();
                     System.out.println("\n____________CADASTRAR JOGO____________");
@@ -69,17 +73,26 @@ public class Main extends CRUD {
 
                     sc.nextLine(); 
                   
-                    System.out.print("Quantidade de genêros: ");
-                    jogo.setQntGeneros(sc.nextInt());
-                    String[]generos = new String[jogo.getQntGeneros()];
-                    for(int i = 0; i < jogo.getQntGeneros(); i++) {
-                        System.out.print("Genêro " + (i + 1) + ": ");
-                       generos[i] = sc.next();
-                    }
-                    jogo.setGeneros(generos);
-                    sc.nextLine(); 
+                    // System.out.print("Quantidade de genêros: ");
+                    // jogo.setQntGeneros(sc.nextInt());
+                    // String[]generos = new String[jogo.getQntGeneros()];
+                    // for(int i = 0; i < jogo.getQntGeneros(); i++) {
+                    //     System.out.print("Genêro " + (i + 1) + ": ");
+                    //    generos[i] = sc.next();
+                    // }
+                    // jogo.setGeneros(generos);
+                    // sc.nextLine(); 
                      
+                    System.out.print("Quantidade de gêneros: ");
+jogo.setQntGeneros(sc.nextInt());
+sc.nextLine(); // Captura a quebra de linha deixada pelo nextInt()
 
+String[] generos = new String[jogo.getQntGeneros()];
+for (int i = 0; i < jogo.getQntGeneros(); i++) {
+    System.out.print("Gênero " + (i + 1) + ": ");
+    generos[i] = sc.nextLine();
+}
+jogo.setGeneros(generos);
                     System.out.print("Valor: ");
                     entrada = sc.next();
                     float valor = Float.parseFloat(entrada);
@@ -195,6 +208,8 @@ public class Main extends CRUD {
                     System.out.println("-> 1 - Intercalação balanceada comum");
                     System.out.println("-> 2 - Intercalação balanceada com blocos de tamanho variável");
                     System.out.println("-> 3 - Intercalação balanceada com seleção por substituição");
+                    System.out.println("-> 4 - Voltar ao menu principal");
+                
                     entrada = sc.next();
                     casoAux = Integer.parseInt(entrada);
                    
@@ -214,7 +229,9 @@ public class Main extends CRUD {
                             System.out.println("Erro na ordenação!");
                         }
                             break;
-                            /* 
+                        
+
+                        /* 
                              * case 3:
                             if (ordenacao.intercacaoSubstituicao(raf) == true) {
                             System.out.println("Ordenação realizada com sucesso!");
@@ -223,9 +240,14 @@ public class Main extends CRUD {
                             }
                             break;
                             */
+
+                      case 4:
+                        break;
+                        
                         
                     }
                 break;
+                  
                 
 
             }

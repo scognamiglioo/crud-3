@@ -3,6 +3,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 public class CSVtoBin extends CRUD {
+  
 
     public static void main(String[] args) throws IOException {
         String arquivoCsv = "games.csv"; // Arquivo CSV de entrada
@@ -14,7 +15,7 @@ public class CSVtoBin extends CRUD {
     }
 
     // Lê os dados do arquivo CSV
-    private static List<String[]> lerCsv(String arquivoCsv) throws IOException {
+    public static List<String[]> lerCsv(String arquivoCsv) throws IOException {
         List<String[]> dadosCsv = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(arquivoCsv));
         String linha;
@@ -31,16 +32,16 @@ public class CSVtoBin extends CRUD {
     }
 
     // Grava os dados no arquivo binário
-    private static void gravarBinario(RandomAccessFile raf, List<String[]> dadosCsv) throws IOException {
+    public static void gravarBinario(RandomAccessFile raf, List<String[]> dadosCsv) throws IOException {
 
-        Jogo jogos = new Jogo();
+         Jogo jogos = new Jogo();
 
         raf.writeInt(dadosCsv.size()); // Grava a quantidade de registros
 
         for (String[] dadosLinha : dadosCsv) {
             raf.seek(raf.length()); // Posiciona o ponteiro no final do arquivo
             raf.writeByte(0); // Escreve a lapide (0 = ativo)
-            
+            raf.writeInt(jogos.getId()); // Escreve o id 
             raf.writeInt(dadosLinha[0].length() + dadosLinha[1].length() + dadosLinha[2].length()
                     + dadosLinha[3].length() + dadosLinha[4].length() + dadosLinha[5].length() + dadosLinha[6].length()
                     + dadosLinha[7].length());

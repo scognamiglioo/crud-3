@@ -3,7 +3,7 @@
 Trabalho desenvolvido pelas alunas Julia e Ludmila da Pontifícia Universidade Católica de Minas Gerais do curso de Ciência da Computação para a disciplina Algoritmo e Estrutura de Dados III, ministrada pelo professor Hayala Curto.
 
 #
-O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas em código, aqui utilizamos de conceitos: 
+O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas em código. Os principais conceitos usados na aplicação são:
 - CRUD
 - Ordenação
 - Árvores

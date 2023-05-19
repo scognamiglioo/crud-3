@@ -10,4 +10,4 @@ O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas
 - Hash extensível
 - Lista invertida
 - Huffman
-- Lzw 
+- Lzw

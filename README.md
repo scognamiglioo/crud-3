@@ -9,3 +9,5 @@ O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas
 - Árvores
 - Hash extensível
 - Lista invertida
+- Huffman
+- Lzw 

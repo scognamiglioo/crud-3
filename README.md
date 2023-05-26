@@ -11,3 +11,5 @@ O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas
 - Lista invertida
 - Huffman
 - Lzw
+- Boyer-Moore
+

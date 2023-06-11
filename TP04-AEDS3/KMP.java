@@ -1,57 +1,105 @@
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+/*
+ * o algoritmo KMP examina os caracteres de txt um a um, 
+ * da esquerda para a direita, sem nunca retroceder. 
+ * em cada iteração, o algoritmo sabe qual posição  k  de pat deve ser emparelhada com a próxima posição i+1 de txt.  
+ * em outras palavras, no fim de cada iteração, o algoritmo sabe qual índice  k  
+ * deve fazer o papel de j na próxima iteração.
+ */
 public class KMP {
-    public static int KMP(String search, String target) {
-        int[] failureTable = failureTable(target);
-    
-        int targetPointer = 0; // current char in target string
-        int searchPointer = 0; // current char in search string
-    
-        while (searchPointer < search.length()) { // while there is more to search with, keep searching
-          if (search.charAt(searchPointer) == target.charAt(targetPointer)) { // case 1
-            // found current char in targetPointer in search string
-            targetPointer++;
-            if (targetPointer == target.length()) { // found all characters
-              int x = target.length() + 1;
-              return searchPointer - x; // return starting index of found target inside searched string
+
+
+    /* essa funçaõ calcula o array lps que guarda o tamanho do maior prefixo que também é sufixo
+     * para cada subpadrao do padrao
+     * 
+    */
+    public static int[] computeLPSArray(char[] padrao) {
+        int[] lps = new int[padrao.length]; // cria um array de inteiros com o tamanho do padrao
+        int len = 0; // tamanho do padrao
+        int i = 1; // indice do padrao
+
+        /* 
+         * aqui o array lps é preenchido 
+         * o array lps guarda o tamanho do maior prefixo que também é sufixo
+         * para cada subpadrao do padrao
+         */
+        while (i < padrao.length) { // enquanto o indice for menor que o tamanho do padrao
+            if (padrao[i] == padrao[len]) { // se o padrao na posicao i for igual ao padrao na posicao len
+                len++; // incrementa o tamanho do padrao
+                lps[i] = len; // o array lps na posicao i recebe o tamanho do padrao
+                i++; // incrementa o indice
+            } else {
+                if (len != 0) { // se o tamanho do padrao for diferente de 0
+                    len = lps[len - 1]; // o tamanho do padrao recebe o array lps na posicao len - 1
+                } else {
+                    lps[i] = 0; // o array lps na posicao i recebe 0
+                    i++; // incrementa o indice
+                }
             }
-            searchPointer++; // move forward if not found target string
-          } else if (targetPointer > 0) { // case 2
-            // use failureTable to use pointer pointed at nearest location of usable string prefix
-            targetPointer = failureTable[targetPointer];
-          } else { // case 3
-            // targetPointer is pointing at state 0, so restart search with current searchPointer index
-            searchPointer++;
-          }
         }
-        return -1;
-      }
-    
-      /**
-      * Returns an int[] that points to last valid string prefix, given target string
-      */
-      public static int[] failureTable(String target) {
-        int[] table = new int[target.length() + 1];
-        // state 0 and 1 are guarenteed be the prior
-        table[0] = -1;
-        table[1] = 0;
-    
-        // the pointers pointing at last failure and current satte
-        int left = 0;
-        int right = 2;
-    
-        while (right < table.length) { // RIGHT NEVER MOVES RIGHT UNTIL ASSIGNED A VALID POINTER
-          if (target.charAt(right - 1) == target.charAt(left)) { // when both chars before left and right are equal, link both and move both forward
-            left++;
-            table[right] = left;
-            right++;
-          }  else if (left > 0) { // if left isn't at the very beginning, then send left backward
-                                  // by following the already set pointer to where it is pointing to
-            left = table[left];
-          } else { // left has fallen all the way back to the beginning
-              table[right] = left;
-              right++;
-          }
-        }
-        return table;
-      }
-    
+        return lps;
     }
+
+    /* essa funcao recebe o padrao e retorna a posicao do padrao no texto
+     * 
+     */
+
+    public static int kmp(String padrao) throws IOException {
+        long start = System.currentTimeMillis();
+
+        RandomAccessFile raf2 = new RandomAccessFile("teste.txt", "r");
+        StringBuilder sb = new StringBuilder();
+
+        // leitura do arquivo txt auxiliar e armazenamento em uma string
+        String line;
+        while ((line = raf2.readLine()) != null) {
+            sb.append(line);
+        }
+        String text = sb.toString();
+
+        char[] padraoArr = padrao.toCharArray();
+        char[] textArr = text.toCharArray();
+        int[] lps = computeLPSArray(padraoArr);
+
+        int i = 0;
+        int j = 0;
+        int comparacoes = 0;
+
+        /*
+         * aqui esse metodo compara o padrao com o texto, se o padrao for igual ao texto
+         * na posicao i, incrementa o tamanho do padrao e o array lps na posicao i
+         * recebe o tamanho do padrao, se o tamanho do padrao for diferente de 0, o
+         * tamanho do padrao recebe o array lps na posicao len - 1, se o tamanho do
+         * padrao for igual a 0, o array lps na posicao i recebe 0
+         */
+
+        while (i < textArr.length) { // enquanto o tamanho do texto for maior que o tamanho do padrao
+            if (padraoArr[j] == textArr[i]) {
+                j++;
+                i++;
+                comparacoes++;
+            }
+            if (j == padraoArr.length) { // se o tamanho do padrao for igual ao tamanho do texto
+                long end = System.currentTimeMillis();
+                System.out.println("Padrão encontrado na posição: " + (i - j));
+                System.out.println("Tempo de execução: " + (end - start) + "ms");
+                System.out.println("Número de comparações: " + comparacoes);
+                return i - j;
+            } else if (i < textArr.length && padraoArr[j] != textArr[i]) { // se o tamanho do padrao for menor que o
+                                                                           // tamanho do texto e o padrao for diferente
+                                                                           // do texto na posicao i
+                if (j != 0) { // se o tamanho do padrao for diferente de 0
+                    j = lps[j - 1]; // o tamanho do padrao recebe o array lps na posicao j - 1
+                } else {
+                    i++; // incrementa o tamanho do texto
+                }
+            }
+        }
+
+        int result = -1;
+        return result;
+    }
+
+}

@@ -1,7 +1,11 @@
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-
+/*
+ * O algoritmo BM busca por ocorrências de P em T realizando comparações explícitas de caracteres em diferentes alinhamentos. 
+ * Diferente de uma busca por força bruta em todos os alinhamentos (que são m - n + 1), 
+ * BM usa informação ganha pelo pré-processamento P para pular quantos alinhamentos forem possíveis.
+ */
 public class BoyerMoore {
 
     /*
@@ -106,14 +110,14 @@ public class BoyerMoore {
                 j--; // decrementa o j
                 comparacoes++; // incrementa o numero de comparações
             }
-            if (j < 0) {
+            if (j < 0) { // se o j for menor que 0 pois o padrao foi encontrado
                 long end = System.currentTimeMillis();
                 System.out.println("Padrão encontrado na posição: " + (i + 1)); // printa a posição do padrao encontrado
                 System.out.println("Tempo de execução: " + (end - start) + "ms"); // printa o tempo de execução
                 System.out.println("Número de comparações: " + comparacoes); // printa o número de comparações
                 return i + 1;
             }
-            i += Math.max(d1[dados.charAt(i)], d2[j]);
+            i += Math.max(d1[dados.charAt(i)], d2[j]); // incrementa o i com o maior valor entre d1 e d2
 
         }
 

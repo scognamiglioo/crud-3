@@ -41,20 +41,21 @@ public class Main extends CRUD {
             System.out.println("|6 - Indices               |");
             System.out.println("|7 - Compressão            |");
             System.out.println("|8 - Descompressão         |");
-            System.out.println("|9 - Boyer-Moore           |");
+            System.out.println("|9 - Boyer Moore           |");
+            System.out.println("|10 - KMP                  |");
             System.out.println("|__________________________|\n");
             System.out.print("-> ");
             do {
                 try {
                     opcao = sc.nextInt();
-                    if (opcao < 0 || opcao > 10)
+                    if (opcao < 0 || opcao > 11)
                         System.out.println("-> Opção inválida!");
                 } catch (Exception e) { // Se a opcao não for um numero
                     System.out.println("-> Digite um número:");
                     sc.nextLine();
                     break;
                 }
-            } while (opcao < 0 || opcao > 10); // Enquanto a opcao for invalida continua no loop
+            } while (opcao < 0 || opcao > 11); // Enquanto a opcao for invalida continua no loop
 
             switch (opcao) {
                 case 0:
@@ -340,6 +341,13 @@ public class Main extends CRUD {
                     String prefixo = sc.next();
                     BoyerMoore.bm(prefixo);
                     break;
+                case 10:
+                    System.out.println("____________KMP___________");
+                    System.out.println("Digite o prefixo:");
+                    String prefixoAux = sc.next();
+                    KMP.kmp(prefixoAux);
+                    break;
+                    
 
             }
 

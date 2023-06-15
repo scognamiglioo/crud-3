@@ -12,4 +12,6 @@ O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas
 - Huffman
 - Lzw
 - Boyer-Moore
+- KMP
+- Cifra de César 
 

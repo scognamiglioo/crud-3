@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -6,8 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class cifradecesar {
-    
-    //metodo para cifrar e atualizar o arquivo original com os dados cifrados
+
+    /*
+     * metodo para cifrar e atualizar o arquivo original com os dados cifrados
+     * 
+     * @param nomeArquivo nome do arquivo a ser cifrado
+     * 
+     */
     public static void cifraCesar(String nomeArquivo) throws IOException {
         RandomAccessFile arquivo = new RandomAccessFile(nomeArquivo + ".bin", "rw");
         List<String> lista = new ArrayList<>();
@@ -25,7 +29,6 @@ public class cifradecesar {
         }
         arquivo.close();
     }
-   
 
     public static String cifra(String linha, int chave) {
         String linhaCifrada = "";
@@ -47,7 +50,12 @@ public class cifradecesar {
         return linhaCifrada;
     }
 
-    //metodo para descifrar e atualizar o arquivo original com os dados descifrados
+    /*
+     * metodo para descifrar e atualizar o arquivo original com os dados descifrados
+     * 
+     * @param nomeArquivo nome do arquivo a ser descifrado
+     * 
+     */
     public static void descifraCesar(String nomeArquivo) throws IOException {
         RandomAccessFile arquivo = new RandomAccessFile(nomeArquivo, "rw");
         List<String> lista = new ArrayList<>();
@@ -85,6 +93,5 @@ public class cifradecesar {
         }
         return linhaDescifrada;
     }
-
 
 }

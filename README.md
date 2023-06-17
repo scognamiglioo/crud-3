@@ -12,6 +12,6 @@ O objetivo do projeto é aplicar o conteúdo teórico aprendido durante as aulas
 | `02` | `Árvores` | `04` | `Boyer-Moore` |
 | `02` | `Hash extensível` | `04` | `KMP` |
 | `02` | `Lista invertida` | `05` | `Cifra de César` |
-
+| `x` | `xxxxxxxxxxxxxxxx` |  `05` | `Criptografia por substituição` |
 
 
